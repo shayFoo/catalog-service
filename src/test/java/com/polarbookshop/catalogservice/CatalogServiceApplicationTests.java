@@ -19,7 +19,7 @@ class CatalogServiceApplicationTests {
 
     @Test
     void whenPostRequestThenBookCreated() {
-        Book expected = new Book("1234567890", "Title", "Author", 9.90);
+        Book expected = new Book("1234567890", "Title", "Author", 9.90, "publisher");
         webTestClient.post()
                 .uri("/books")
                 .bodyValue(expected)

@@ -28,10 +28,10 @@ public class BookDataLoader {
         }
         springDataJdbcBookRepository.deleteAll();
         List<Book> books = List.of(
-                new Book("9781617294945", "Spring in Action, Sixth Edition", "Craig Walls", 44.99),
-                new Book("9781617297574", "Spring Boot in Action", "Craig Walls", 39.99),
-                new Book("9780134686097", "Effective Java, Third Edition", "Joshua Bloch", 49.99),
-                new Book("9780596009205", "Head First Java, Second Edition", "Kathy Sierra, Bert Bates", 37.35)
+                new Book("9781617294945", "Spring in Action, Sixth Edition", "Craig Walls", 44.99, "spring"),
+                new Book("9781617297574", "Spring Boot in Action", "Craig Walls", 39.99, "spring"),
+                new Book("9780134686097", "Effective Java, Third Edition", "Joshua Bloch", 49.99, "java"),
+                new Book("9780596009205", "Head First Java, Second Edition", "Kathy Sierra, Bert Bates", 37.35, "java")
         );
         springDataJdbcBookRepository.saveAll(books.stream()
                 .map(BookEntity::of)

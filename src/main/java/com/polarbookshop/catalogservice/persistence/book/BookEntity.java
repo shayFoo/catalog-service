@@ -20,6 +20,8 @@ public record BookEntity(
         String title,
         @NonNull
         String author,
+        @NonNull
+        String publisher,
         double price,
         @CreatedDate
         LocalDateTime createdDate,
@@ -39,6 +41,7 @@ public record BookEntity(
                 book.isbn(),
                 book.title(),
                 book.author(),
+                book.publisher(),
                 book.price(),
                 LocalDateTime.now(),
                 LocalDateTime.now(),
@@ -54,7 +57,8 @@ public record BookEntity(
                 this.isbn,
                 this.title,
                 this.author,
-                this.price
+                this.price,
+                this.publisher
         );
     }
 

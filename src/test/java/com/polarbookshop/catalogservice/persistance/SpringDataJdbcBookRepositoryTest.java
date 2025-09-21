@@ -37,10 +37,10 @@ public class SpringDataJdbcBookRepositoryTest {
 
     @Test
     void mergeTest() {
-        BookEntity entity = BookEntity.of(new Book("1234567890", "Title", "Author", 9.90));
+        BookEntity entity = BookEntity.of(new Book("1234567890", "Title", "Author", 9.90, "publisher"));
         BookEntity save = repository.merge(entity);
 
-        BookEntity merged = repository.merge(BookEntity.of(new Book(save.isbn(), "New Title", "New Author", 19.90)));
+        BookEntity merged = repository.merge(BookEntity.of(new Book(save.isbn(), "New Title", "New Author", 19.90, "publisher")));
 
         assertThat(merged.title()).isEqualTo("New Title");
         assertThat(merged.author()).isEqualTo("New Author");
@@ -53,7 +53,7 @@ public class SpringDataJdbcBookRepositoryTest {
     @Test
     void findBookByIsbnIfExistTest() {
         String isbn = "1234567890";
-        BookEntity entity = BookEntity.of(new Book(isbn, "Title", "Author", 9.90));
+        BookEntity entity = BookEntity.of(new Book(isbn, "Title", "Author", 9.90, "publisher"));
         jdbcAggregateTemplate.insert(entity);
 
         Optional<BookEntity> actual = repository.findByIsbn(isbn);
