@@ -4,6 +4,7 @@ import com.polarbookshop.catalogservice.config.DataConfig;
 import com.polarbookshop.catalogservice.domain.book.Book;
 import com.polarbookshop.catalogservice.persistence.book.BookEntity;
 import com.polarbookshop.catalogservice.persistence.book.SpringDataJdbcBookRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.jdbc.DataJdbcTest;
@@ -28,6 +29,11 @@ public class SpringDataJdbcBookRepositoryTest {
 
     @Autowired
     JdbcAggregateTemplate jdbcAggregateTemplate;
+
+    @BeforeEach
+    void setUp() {
+        jdbcAggregateTemplate.deleteAll(BookEntity.class);
+    }
 
     @Test
     void mergeTest() {
