@@ -3,7 +3,7 @@ on: "push"
 jobs:
   build:
     name: "Build and Test"
-    runs-on: "ubuntu-24.03-lts"
+    runs-on: "ubuntu-latest"
     permissions:
       contents: read
       security-events: write
