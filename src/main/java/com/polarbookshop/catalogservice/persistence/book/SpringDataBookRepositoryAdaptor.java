@@ -8,38 +8,38 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public class SpringDataJdbcBookRepository implements BookRepository {
-    private final JdbcBookRepository jdbcBookRepository;
+public class SpringDataBookRepositoryAdaptor implements BookRepository {
+    private final SpringDataBookRepository springDataBookRepository;
 
-    public SpringDataJdbcBookRepository(JdbcBookRepository jdbcBookRepository) {
-        this.jdbcBookRepository = jdbcBookRepository;
+    public SpringDataBookRepositoryAdaptor(SpringDataBookRepository springDataBookRepository) {
+        this.springDataBookRepository = springDataBookRepository;
     }
 
     @Override
     public List<Book> findAll() {
-        return toDomainList(jdbcBookRepository.findAll());
+        return toDomainList(springDataBookRepository.findAll());
     }
 
     @Override
     public Optional<Book> findByIsbn(String isbn) {
-        return jdbcBookRepository.findByIsbn(isbn)
+        return springDataBookRepository.findByIsbn(isbn)
                 .map(BookEntity::toDomain);
     }
 
     @Override
     public boolean existsByIsbn(String isbn) {
-        return jdbcBookRepository.existsByIsbn(isbn);
+        return springDataBookRepository.existsByIsbn(isbn);
     }
 
     @Override
     public Book save(Book book) {
-        return jdbcBookRepository.save(BookEntity.of(book))
+        return springDataBookRepository.save(BookEntity.of(book))
                 .toDomain();
     }
 
     @Override
     public void deleteByIsbn(String isbn) {
-        jdbcBookRepository.deleteByIsbn(isbn);
+        springDataBookRepository.deleteByIsbn(isbn);
     }
 
     @Override
@@ -47,7 +47,7 @@ public class SpringDataJdbcBookRepository implements BookRepository {
         List<BookEntity> entities = books.stream()
                 .map(BookEntity::of)
                 .toList();
-        return toDomainList(jdbcBookRepository.saveAll(entities));
+        return toDomainList(springDataBookRepository.saveAll(entities));
     }
 
     private List<Book> toDomainList(List<BookEntity> entities) {
