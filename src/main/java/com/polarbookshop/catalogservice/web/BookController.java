@@ -1,7 +1,7 @@
 package com.polarbookshop.catalogservice.web;
 
-import com.polarbookshop.catalogservice.domain.Book;
-import com.polarbookshop.catalogservice.domain.BookService;
+import com.polarbookshop.catalogservice.domain.book.Book;
+import com.polarbookshop.catalogservice.domain.book.BookService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;

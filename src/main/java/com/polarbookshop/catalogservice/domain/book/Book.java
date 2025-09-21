@@ -1,4 +1,4 @@
-package com.polarbookshop.catalogservice.domain;
+package com.polarbookshop.catalogservice.domain.book;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

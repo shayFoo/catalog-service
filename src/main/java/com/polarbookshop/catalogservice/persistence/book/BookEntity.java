@@ -1,6 +1,6 @@
 package com.polarbookshop.catalogservice.persistence.book;
 
-import com.polarbookshop.catalogservice.domain.Book;
+import com.polarbookshop.catalogservice.domain.book.Book;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;

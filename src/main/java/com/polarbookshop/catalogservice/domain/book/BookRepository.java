@@ -1,4 +1,4 @@
-package com.polarbookshop.catalogservice.domain;
+package com.polarbookshop.catalogservice.domain.book;
 
 import java.util.List;
 import java.util.Optional;
