@@ -1,5 +1,6 @@
 package com.polarbookshop.catalogservice.domain;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface BookRepository {
@@ -12,4 +13,6 @@ public interface BookRepository {
     Book save(Book book);
 
     void deleteByIsbn(String isbn);
+
+    List<Book> saveAll(List<Book> books);
 }
