@@ -9,45 +9,43 @@ import java.util.Optional;
 
 @Repository
 public class SpringDataBookRepositoryAdaptor implements BookRepository {
-    private final SpringDataBookRepository springDataBookRepository;
+    private final SpringDataJdbcBookRepository springDataJdbcBookRepository;
 
-    public SpringDataBookRepositoryAdaptor(SpringDataBookRepository springDataBookRepository) {
-        this.springDataBookRepository = springDataBookRepository;
+    public SpringDataBookRepositoryAdaptor(SpringDataJdbcBookRepository springDataJdbcBookRepository) {
+        this.springDataJdbcBookRepository = springDataJdbcBookRepository;
     }
 
     @Override
     public List<Book> findAll() {
-        return toDomainList(springDataBookRepository.findAll());
+        return toDomainList(springDataJdbcBookRepository.findAll());
     }
 
     @Override
     public Optional<Book> findByIsbn(String isbn) {
-        return springDataBookRepository.findByIsbn(isbn)
+        return springDataJdbcBookRepository.findByIsbn(isbn)
                 .map(BookEntity::toDomain);
     }
 
     @Override
     public boolean existsByIsbn(String isbn) {
-        return springDataBookRepository.existsByIsbn(isbn);
+        return springDataJdbcBookRepository.existsByIsbn(isbn);
     }
 
     @Override
     public Book save(Book book) {
-        return springDataBookRepository.save(BookEntity.of(book))
+        return springDataJdbcBookRepository.save(BookEntity.of(book))
                 .toDomain();
     }
 
     @Override
     public void deleteByIsbn(String isbn) {
-        springDataBookRepository.deleteByIsbn(isbn);
+        springDataJdbcBookRepository.deleteByIsbn(isbn);
     }
 
     @Override
-    public List<Book> saveAll(List<Book> books) {
-        List<BookEntity> entities = books.stream()
-                .map(BookEntity::of)
-                .toList();
-        return toDomainList(springDataBookRepository.saveAll(entities));
+    public Book mergeDetails(String isbn, Book book) {
+        return springDataJdbcBookRepository.merge(BookEntity.of(book.withIsbn(isbn)))
+                .toDomain();
     }
 
     private List<Book> toDomainList(List<BookEntity> entities) {

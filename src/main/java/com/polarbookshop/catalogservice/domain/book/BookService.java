@@ -31,16 +31,6 @@ public class BookService {
     }
 
     public Book editBookDetails(String isbn, Book book) {
-        return bookRepository.findByIsbn(isbn)
-                .map(existingBook -> {
-                    Book updatedBook = new Book(
-                            existingBook.isbn(),
-                            book.title(),
-                            book.author(),
-                            book.price()
-                    );
-                    return bookRepository.save(updatedBook);
-                })
-                .orElseGet(() -> bookRepository.save(book));
+        return bookRepository.mergeDetails(isbn, book);
     }
 }

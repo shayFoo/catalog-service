@@ -20,4 +20,7 @@ public record Book(
         @Positive(message = "the book price must be greater than zero.")
         Double price
 ) {
+    public Book withIsbn(String isbn) {
+        return new Book(isbn, this.title, this.author, this.price);
+    }
 }

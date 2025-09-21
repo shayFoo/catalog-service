@@ -15,25 +15,25 @@ import java.util.List;
 @Component
 @Profile("testdata")
 public class BookDataLoader {
-    private final SpringDataBookRepository springDataBookRepository;
+    private final SpringDataJdbcBookRepository springDataJdbcBookRepository;
 
-    public BookDataLoader(SpringDataBookRepository springDataBookRepository) {
-        this.springDataBookRepository = springDataBookRepository;
+    public BookDataLoader(SpringDataJdbcBookRepository springDataJdbcBookRepository) {
+        this.springDataJdbcBookRepository = springDataJdbcBookRepository;
     }
 
     @EventListener(ApplicationReadyEvent.class)
     public void loadBookData() {
-        if (springDataBookRepository.count() > 0) {
+        if (springDataJdbcBookRepository.count() > 0) {
             return; // Data already loaded
         }
-        springDataBookRepository.deleteAll();
+        springDataJdbcBookRepository.deleteAll();
         List<Book> books = List.of(
                 new Book("9781617294945", "Spring in Action, Sixth Edition", "Craig Walls", 44.99),
                 new Book("9781617297574", "Spring Boot in Action", "Craig Walls", 39.99),
                 new Book("9780134686097", "Effective Java, Third Edition", "Joshua Bloch", 49.99),
                 new Book("9780596009205", "Head First Java, Second Edition", "Kathy Sierra, Bert Bates", 37.35)
         );
-        springDataBookRepository.saveAll(books.stream()
+        springDataJdbcBookRepository.saveAll(books.stream()
                 .map(BookEntity::of)
                 .toList());
     }
