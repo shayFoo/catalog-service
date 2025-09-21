@@ -32,13 +32,23 @@ tasks.getByName<BootRun>("bootRun") {
     }
 }
 
+extra["springCloudVersion"] = "2025.0.0"
+
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-validation")
+    implementation("org.springframework.cloud:spring-cloud-starter-config")
+    implementation("org.springframework.retry:spring-retry")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
     testImplementation("org.springframework.boot:spring-boot-starter-webflux")
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
+}
+
+dependencyManagement {
+    imports {
+        mavenBom("org.springframework.cloud:spring-cloud-dependencies:${property("springCloudVersion")}")
+    }
 }
 
 tasks.withType<Test> {
