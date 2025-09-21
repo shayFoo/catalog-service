@@ -21,7 +21,4 @@ public record Book(
         Double price,
         String publisher
 ) {
-    public Book withIsbn(String isbn) {
-        return new Book(isbn, this.title, this.author, this.price, this.publisher);
-    }
 }

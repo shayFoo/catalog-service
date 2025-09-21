@@ -1,9 +1,10 @@
-package com.polarbookshop.catalogservice.persistance;
+package com.polarbookshop.catalogservice.domain;
 
 import com.polarbookshop.catalogservice.config.DataConfig;
 import com.polarbookshop.catalogservice.domain.book.Book;
+import com.polarbookshop.catalogservice.domain.book.BookRepository;
 import com.polarbookshop.catalogservice.persistence.book.BookEntity;
-import com.polarbookshop.catalogservice.persistence.book.SpringDataJdbcBookRepository;
+import com.polarbookshop.catalogservice.persistence.book.SpringDataBookRepositoryAdaptor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,20 +14,20 @@ import org.springframework.context.annotation.Import;
 import org.springframework.data.jdbc.core.JdbcAggregateTemplate;
 import org.springframework.test.context.ActiveProfiles;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJdbcTest
-@Import(DataConfig.class)
+@Import({DataConfig.class, SpringDataBookRepositoryAdaptor.class})
 @AutoConfigureTestDatabase(
         replace = AutoConfigureTestDatabase.Replace.NONE
 )
 @ActiveProfiles("integration")
-public class SpringDataJdbcBookRepositoryTest {
+public class BookRepositoryTest {
     @Autowired
-    SpringDataJdbcBookRepository repository;
-
+    BookRepository repository;
     @Autowired
     JdbcAggregateTemplate jdbcAggregateTemplate;
 
@@ -37,11 +38,17 @@ public class SpringDataJdbcBookRepositoryTest {
 
     @Test
     void mergeTest() {
-        BookEntity entity = BookEntity.of(new Book("1234567890", "Title", "Author", 9.90, "publisher"));
-        BookEntity save = repository.merge(entity);
+        Book book = new Book("1234567890", "Title", "Author", 9.90, "publisher");
+        repository.save(book);
+        List<BookEntity> savedList = jdbcAggregateTemplate.findAll(BookEntity.class);
+        assertThat(savedList).hasSize(1);
+        BookEntity save = savedList.getFirst();
 
-        BookEntity merged = repository.merge(BookEntity.of(new Book(save.isbn(), "New Title", "New Author", 19.90, "publisher")));
+        repository.merge(save.isbn(), new Book(save.isbn(), "New Title", "New Author", 19.90, "publisher"));
 
+        List<BookEntity> mergedList = jdbcAggregateTemplate.findAll(BookEntity.class);
+        assertThat(mergedList).hasSize(1);
+        BookEntity merged = mergedList.getFirst();
         assertThat(merged.title()).isEqualTo("New Title");
         assertThat(merged.author()).isEqualTo("New Author");
         assertThat(merged.price()).isEqualTo(19.90);
@@ -56,11 +63,12 @@ public class SpringDataJdbcBookRepositoryTest {
         BookEntity entity = BookEntity.of(new Book(isbn, "Title", "Author", 9.90, "publisher"));
         jdbcAggregateTemplate.insert(entity);
 
-        Optional<BookEntity> actual = repository.findByIsbn(isbn);
+        Optional<Book> actual = repository.findByIsbn(isbn);
 
         assertThat(actual).isPresent()
                 .get()
-                .extracting(BookEntity::isbn, BookEntity::title, BookEntity::author, BookEntity::price)
+                .extracting(Book::isbn, Book::title, Book::author, Book::price)
                 .containsExactly(isbn, "Title", "Author", 9.90);
     }
+
 }

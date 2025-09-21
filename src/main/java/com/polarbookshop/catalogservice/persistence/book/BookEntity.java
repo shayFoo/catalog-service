@@ -62,4 +62,18 @@ public record BookEntity(
         );
     }
 
+    public BookEntity updateWith(Book book) {
+        return new BookEntity(
+                this.id,
+                this.isbn,
+                book.title(),
+                book.author(),
+                book.publisher(),
+                book.price(),
+                this.createdDate,
+                LocalDateTime.now(),
+                this.version
+        );
+    }
+
 }
