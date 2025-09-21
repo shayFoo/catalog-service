@@ -1,7 +1,6 @@
 package com.polarbookshop.catalogservice.persistence.book;
 
 import com.polarbookshop.catalogservice.domain.book.Book;
-import com.polarbookshop.catalogservice.domain.book.BookRepository;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.annotation.Profile;
 import org.springframework.context.event.EventListener;
@@ -18,7 +17,7 @@ import java.util.List;
 public class BookDataLoader {
     private final SpringDataBookRepository springDataBookRepository;
 
-    public BookDataLoader(BookRepository repository, SpringDataBookRepository springDataBookRepository) {
+    public BookDataLoader(SpringDataBookRepository springDataBookRepository) {
         this.springDataBookRepository = springDataBookRepository;
     }
 
