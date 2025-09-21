@@ -44,7 +44,10 @@ public class SpringDataBookRepositoryAdaptor implements BookRepository {
 
     @Override
     public Book merge(String isbn, Book book) {
-        return springDataJdbcBookRepository.merge(BookEntity.of(book.withIsbn(isbn)))
+        Optional<BookEntity> maybeEntity = springDataJdbcBookRepository.findByIsbn(isbn);
+        return maybeEntity.map(bookEntity -> bookEntity.updateWith(book))
+                .map(springDataJdbcBookRepository::save)
+                .orElseGet(() -> springDataJdbcBookRepository.save(BookEntity.of(book)))
                 .toDomain();
     }
 
