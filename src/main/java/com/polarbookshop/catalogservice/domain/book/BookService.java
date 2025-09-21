@@ -31,6 +31,6 @@ public class BookService {
     }
 
     public Book editBookDetails(String isbn, Book book) {
-        return bookRepository.mergeDetails(isbn, book);
+        return bookRepository.merge(isbn, book);
     }
 }

@@ -43,7 +43,7 @@ public class SpringDataBookRepositoryAdaptor implements BookRepository {
     }
 
     @Override
-    public Book mergeDetails(String isbn, Book book) {
+    public Book merge(String isbn, Book book) {
         return springDataJdbcBookRepository.merge(BookEntity.of(book.withIsbn(isbn)))
                 .toDomain();
     }

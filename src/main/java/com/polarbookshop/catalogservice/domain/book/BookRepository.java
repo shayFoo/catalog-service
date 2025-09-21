@@ -14,5 +14,5 @@ public interface BookRepository {
 
     void deleteByIsbn(String isbn);
 
-    Book mergeDetails(String isbn, Book book);
+    Book merge(String isbn, Book book);
 }
