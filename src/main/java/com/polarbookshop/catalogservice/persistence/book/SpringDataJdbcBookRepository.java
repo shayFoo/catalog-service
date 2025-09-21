@@ -33,8 +33,8 @@ public interface SpringDataJdbcBookRepository extends ListCrudRepository<BookEnt
                                         version = b.version + 1
                         WHEN NOT MATCHED THEN
                             INSERT (isbn, title, author, price, created_date, last_modified_date, version)
-                            VALUES (vals.isbn, vals.title, vals.author, vals.price, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0)
-                        RETURNING *
+                                                        VALUES (vals.isbn, vals.title, vals.author, vals.price, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0)
+                        RETURNING b.id, b.isbn, b.title, b.author, b.price, b.created_date, b.last_modified_date, b.version
             """)
     BookEntity merge(BookEntity entity);
 }

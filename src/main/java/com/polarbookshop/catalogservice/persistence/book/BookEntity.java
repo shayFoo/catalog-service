@@ -8,7 +8,7 @@ import org.springframework.data.annotation.Version;
 import org.springframework.data.relational.core.mapping.Table;
 import org.springframework.lang.NonNull;
 
-import java.time.Instant;
+import java.time.LocalDateTime;
 
 @Table(name = "book")
 public record BookEntity(
@@ -22,9 +22,9 @@ public record BookEntity(
         String author,
         double price,
         @CreatedDate
-        Instant createdDate,
+        LocalDateTime createdDate,
         @LastModifiedDate
-        Instant lastModifiedDate,
+        LocalDateTime lastModifiedDate,
         @Version
         int version
 ) {
@@ -40,8 +40,8 @@ public record BookEntity(
                 book.title(),
                 book.author(),
                 book.price(),
-                Instant.now(),
-                Instant.now(),
+                LocalDateTime.now(),
+                LocalDateTime.now(),
                 0
         );
     }
