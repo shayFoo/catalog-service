@@ -1,0 +1,12 @@
+services:
+  polar-postgres:
+    image: postgres:17.6
+    container_name: polar-postgres
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=polardb_catalog
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+
