@@ -1,4 +1,4 @@
-package com.polarbookshop.catalogservice.demo;
+package com.polarbookshop.catalogservice.persistence.book;
 
 import com.polarbookshop.catalogservice.domain.Book;
 import com.polarbookshop.catalogservice.domain.BookRepository;
@@ -6,6 +6,8 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.annotation.Profile;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 /**
  * Component responsible for loading initial book data into the catalog for testing purposes.
@@ -23,7 +25,7 @@ public class BookDataLoader {
     @EventListener(ApplicationReadyEvent.class)
     public void loadBookData() {
         repository.saveAll(
-                java.util.List.of(
+                List.of(
                         new Book("9781617294945", "Spring in Action, Sixth Edition", "Craig Walls", 44.99),
                         new Book("9781617297574", "Spring Boot in Action", "Craig Walls", 39.99),
                         new Book("9780134686097", "Effective Java, Third Edition", "Joshua Bloch", 49.99),

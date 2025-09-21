@@ -1,4 +1,4 @@
-package com.polarbookshop.catalogservice.persistence;
+package com.polarbookshop.catalogservice.persistence.book;
 
 import com.polarbookshop.catalogservice.domain.Book;
 import com.polarbookshop.catalogservice.domain.BookRepository;
@@ -11,17 +11,20 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @Repository
 public class InMemoryBookRepository implements BookRepository {
-    private static final Map<String, Book> books = new ConcurrentHashMap<>();
+    private static final Map<String, BookEntity> books = new ConcurrentHashMap<>();
 
     @Override
     public Iterable<Book> findAll() {
-        return books.values();
+        return books.values()
+                .stream()
+                .map(BookEntity::toDomain)
+                .toList();
     }
 
     @Override
     public Optional<Book> findByIsbn(String isbn) {
         return existsByIsbn(isbn)
-                ? Optional.of(books.get(isbn))
+                ? Optional.of(books.get(isbn)).map(BookEntity::toDomain)
                 : Optional.empty();
     }
 
@@ -32,7 +35,7 @@ public class InMemoryBookRepository implements BookRepository {
 
     @Override
     public Book save(Book book) {
-        books.put(book.isbn(), book);
+        books.put(book.isbn(), BookEntity.of(book));
         return book;
     }
 
