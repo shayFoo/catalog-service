@@ -11,10 +11,10 @@ jobs:
       - name: "Checkout source code"
         uses: actions/setup-java@v5
             - name: "Set up JDK 21"
-        with:
-          java-version: "21"
-          distribution: "temurin"
-          cache: "gradle"
+              with:
+                java-version: "21"
+                distribution: "temurin"
+                cache: "gradle"
       - name: "Code vulnerability scanning"
         uses: "anchore/scan-action@v6"
         id: scan
