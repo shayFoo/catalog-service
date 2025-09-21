@@ -18,9 +18,10 @@ public record Book(
         String author,
         @NotNull(message = "the book price must be defined.")
         @Positive(message = "the book price must be greater than zero.")
-        Double price
+        Double price,
+        String publisher
 ) {
     public Book withIsbn(String isbn) {
-        return new Book(isbn, this.title, this.author, this.price);
+        return new Book(isbn, this.title, this.author, this.price, this.publisher);
     }
 }

@@ -18,7 +18,7 @@ class BookJsonTest {
 
     @Test
     void testSerialize() throws IOException {
-        Book book = new Book("1234567890", "Title", "Author", 9.90);
+        Book book = new Book("1234567890", "Title", "Author", 9.90, "publisher");
         JsonContent<Book> jsonContent = json.write(book);
         assertThat(jsonContent).extractingJsonPathStringValue("@.isbn")
                 .isEqualTo(book.isbn());
@@ -32,8 +32,8 @@ class BookJsonTest {
 
     @Test
     void testDeserialize() throws IOException {
-        String content = "{\"isbn\":\"1234567890\",\"title\":\"Title\",\"author\":\"Author\",\"price\":9.90}";
-        Book book = new Book("1234567890", "Title", "Author", 9.90);
+        String content = "{\"isbn\":\"1234567890\",\"title\":\"Title\",\"author\":\"Author\",\"price\":9.90,\"publisher\":\"publisher\"}";
+        Book book = new Book("1234567890", "Title", "Author", 9.90, "publisher");
         assertThat(json.parse(content)).isEqualTo(book);
     }
 }
