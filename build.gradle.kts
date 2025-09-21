@@ -33,6 +33,7 @@ tasks.getByName<BootRun>("bootRun") {
 }
 
 extra["springCloudVersion"] = "2025.0.0"
+extra["testcontainersVersion"] = "1.21.3"
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
@@ -42,6 +43,8 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.boot:spring-boot-starter-data-jdbc")
     runtimeOnly("org.postgresql:postgresql")
+
+    testImplementation("org.testcontainers:postgresql")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
     testImplementation("org.springframework.boot:spring-boot-starter-webflux")
@@ -51,6 +54,7 @@ dependencies {
 dependencyManagement {
     imports {
         mavenBom("org.springframework.cloud:spring-cloud-dependencies:${property("springCloudVersion")}")
+        mavenBom("org.testcontainers:testcontainers-bom:${property("testcontainersVersion")}")
     }
 }
 
