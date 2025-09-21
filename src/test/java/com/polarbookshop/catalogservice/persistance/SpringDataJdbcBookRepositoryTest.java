@@ -9,7 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.jdbc.DataJdbcTest;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.context.annotation.Import;
+import org.springframework.data.jdbc.core.JdbcAggregateTemplate;
 import org.springframework.test.context.ActiveProfiles;
+
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -22,6 +25,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class SpringDataJdbcBookRepositoryTest {
     @Autowired
     SpringDataJdbcBookRepository repository;
+
+    @Autowired
+    JdbcAggregateTemplate jdbcAggregateTemplate;
 
     @Test
     void mergeTest() {
@@ -36,5 +42,19 @@ public class SpringDataJdbcBookRepositoryTest {
         assertThat(merged.createdDate()).isEqualTo(save.createdDate());
         assertThat(merged.lastModifiedDate()).isAfterOrEqualTo(save.lastModifiedDate());
         assertThat(merged.version()).isEqualTo(save.version() + 1);
+    }
+
+    @Test
+    void findBookByIsbnIfExistTest() {
+        String isbn = "1234567890";
+        BookEntity entity = BookEntity.of(new Book(isbn, "Title", "Author", 9.90));
+        jdbcAggregateTemplate.insert(entity);
+
+        Optional<BookEntity> actual = repository.findByIsbn(isbn);
+
+        assertThat(actual).isPresent()
+                .get()
+                .extracting(BookEntity::isbn, BookEntity::title, BookEntity::author, BookEntity::price)
+                .containsExactly(isbn, "Title", "Author", 9.90);
     }
 }
