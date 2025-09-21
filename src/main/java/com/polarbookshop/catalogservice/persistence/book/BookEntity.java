@@ -1,9 +1,13 @@
 package com.polarbookshop.catalogservice.persistence.book;
 
 import com.polarbookshop.catalogservice.domain.Book;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.annotation.Version;
 import org.springframework.lang.NonNull;
+
+import java.time.Instant;
 
 public record BookEntity(
         @Id
@@ -15,6 +19,10 @@ public record BookEntity(
         @NonNull
         String author,
         double price,
+        @CreatedDate
+        Instant createdDate,
+        @LastModifiedDate
+        Instant lastModifiedDate,
         @Version
         int version
 ) {
@@ -30,6 +38,8 @@ public record BookEntity(
                 book.title(),
                 book.author(),
                 book.price(),
+                Instant.now(),
+                Instant.now(),
                 0
         );
     }
