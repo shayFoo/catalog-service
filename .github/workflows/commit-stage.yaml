@@ -10,9 +10,9 @@ jobs:
     steps:
       - name: "Checkout source code"
         uses: actions/setup-java@v5
-            - name: "Set up JDK 25"
+            - name: "Set up JDK 21"
         with:
-          java-version: "25"
+          java-version: "21"
           distribution: "temurin"
           cache: "gradle"
       - name: "Code vulnerability scanning"
