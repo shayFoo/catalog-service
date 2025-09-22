@@ -13,6 +13,8 @@ spec:
     metadata:
       labels:
         app: catalog-service
+    securityContext:
+      runAsNonRoot: true
     spec:
       containers:
         - name: catalog-service
@@ -33,13 +35,19 @@ spec:
               value: testdata
           resources:
             requests:
-              memory: "120Mi"
+              memory: "512Mi"
               cpu: "200m"
             limits:
-              memory: "240Mi"
+              memory: "1024Mi"
               cpu: "400m"
+          volumeMounts:
+            - name: tmp
+              mountPath: /tmp
           securityContext:
             allowPrivilegeEscalation: false
-    securityContext:
-      fsGroup: 1000
-      runAsUser: 1000
+            readOnlyRootFilesystem: true
+      volumes:
+        - name: tmp
+          emptyDir: { }
+
+
