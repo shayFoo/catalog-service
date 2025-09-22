@@ -1,3 +1,4 @@
+import org.springframework.boot.gradle.tasks.bundling.BootBuildImage
 import org.springframework.boot.gradle.tasks.run.BootRun
 
 plugins {
@@ -62,4 +63,23 @@ dependencyManagement {
 
 tasks.withType<Test> {
     useJUnitPlatform()
+}
+
+// cloud native buildpack settings
+tasks.named<BootBuildImage>("bootBuildImage") {
+    environment = mapOf(
+        "BP_JVM_VERSION" to "25",
+        "BP_JVM_TIMEZONE" to "Asia/Tokyo",
+        "LANG" to "ja_JP.UTF-8",
+        "LANGUAGE" to "ja_JP:ja",
+        "LC_ALL" to "ja_JP.UTF-8"
+    )
+    imageName = project.name
+    docker {
+        publishRegistry {
+            username = project.findProperty("registryUsername")?.toString()
+            password = project.findProperty("registryToken")?.toString()
+            url = project.findProject("registryUrl")?.toString()
+        }
+    }
 }
