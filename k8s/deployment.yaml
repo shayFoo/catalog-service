@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: catalog-service
-          image: catalog-service
+          image: catalog-service:0.0.1-SNAPSHOT
           imagePullPolicy: IfNotPresent
           lifecycle:
             preStop:
@@ -31,3 +31,15 @@ spec:
               value: jdbc:postgresql://polar-postgres/polardb_catalog
             - name: SPRING_PROFILES_ACTIVE
               value: testdata
+          resources:
+            requests:
+              memory: "120Mi"
+              cpu: "200m"
+            limits:
+              memory: "240Mi"
+              cpu: "400m"
+          securityContext:
+            allowPrivilegeEscalation: false
+    securityContext:
+      fsGroup: 1000
+      runAsUser: 1000
