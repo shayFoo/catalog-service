@@ -2,8 +2,8 @@
 custom_build(
     # Name of the container image
     ref = 'catalog-service',
-    # command to build the image
-    command='./gradlew bootBuildImage --imageName $EXPECTED_REF',
+    # Command to build the image - using env parameter for cross-platform compatibility
+    command='gradlew bootBuildImage --imageName %EXPECTED_REF%',
     # files to watch for changes
     deps=['build.gradle.kts', 'src']
 )

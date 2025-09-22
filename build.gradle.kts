@@ -52,6 +52,8 @@ dependencies {
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
     testImplementation("org.springframework.boot:spring-boot-starter-webflux")
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
+
+    developmentOnly("org.springframework.boot:spring-boot-devtools")
 }
 
 dependencyManagement {
@@ -72,7 +74,7 @@ tasks.named<BootBuildImage>("bootBuildImage") {
         "BP_JVM_TIMEZONE" to "Asia/Tokyo",
         "LANG" to "ja_JP.UTF-8",
         "LANGUAGE" to "ja_JP:ja",
-        "LC_ALL" to "ja_JP.UTF-8"
+        "LC_ALL" to "ja_JP.UTF-8",
     )
     imageName = project.name
     docker {
