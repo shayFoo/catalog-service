@@ -57,7 +57,7 @@ jobs:
       - name: "Build container image"
         run: |
           chmod +x gradlew
-          ./gradlew jlinkDockerBuildImage \
+          ./gradlew  bootBuildImage\
             --imageName ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.VERSION }}
       - name: "Image vulnerability scanning"
         uses: "anchore/scan-action@v6"
