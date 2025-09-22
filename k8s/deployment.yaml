@@ -45,6 +45,7 @@ spec:
               mountPath: /tmp
           securityContext:
             allowPrivilegeEscalation: false
+            runAsNonRoot: true
             readOnlyRootFilesystem: true
       volumes:
         - name: tmp
