@@ -18,7 +18,7 @@ spec:
         runAsNonRoot: true
       containers:
         - name: catalog-service
-          image: catalog-service
+          image: catalog-service:0.0.1-SNAPSHOT
           imagePullPolicy: IfNotPresent
           lifecycle:
             preStop:
