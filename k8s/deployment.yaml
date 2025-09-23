@@ -13,12 +13,12 @@ spec:
     metadata:
       labels:
         app: catalog-service
-    securityContext:
-      runAsNonRoot: true
     spec:
+      securityContext:
+        runAsNonRoot: true
       containers:
         - name: catalog-service
-          image: catalog-service:0.0.1-SNAPSHOT
+          image: catalog-service
           imagePullPolicy: IfNotPresent
           lifecycle:
             preStop:
@@ -33,6 +33,10 @@ spec:
               value: jdbc:postgresql://polar-postgres/polardb_catalog
             - name: SPRING_PROFILES_ACTIVE
               value: testdata
+            - name: SPRING_CLOUD_CONFIG_FAIL-FAST
+              value: "true"
+            - name: SPRING_CLOUD_CONFIG_RETRY_MAX-ATTEMPTS
+              value: "10"
             - name: SPRING_CLOUD_CONFIG_URI
               value: http://config-service
           resources:
