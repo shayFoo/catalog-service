@@ -21,7 +21,7 @@ public class SecurityConfig {
         return http
                 .authorizeHttpRequests(auth -> auth.
                         requestMatchers(HttpMethod.GET, "/", "/books/**").permitAll()
-                        .anyRequest().authenticated())
+                        .anyRequest().hasRole("employee"))
                 .oauth2ResourceServer(c -> c.jwt(Customizer.withDefaults()))
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
