@@ -35,6 +35,7 @@ tasks.getByName<BootRun>("bootRun") {
 
 extra["springCloudVersion"] = "2025.0.0"
 extra["testcontainersVersion"] = "1.21.3"
+extra["testKeycloakVersion"] = "3.9.0"
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
@@ -52,6 +53,9 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
     testImplementation("org.springframework.boot:spring-boot-starter-webflux")
+    testImplementation("org.springframework.security:spring-security-test")
+    testImplementation("com.github.dasniko:testcontainers-keycloak:${property("testKeycloakVersion")}")
+
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
 
     developmentOnly("org.springframework.boot:spring-boot-devtools")
