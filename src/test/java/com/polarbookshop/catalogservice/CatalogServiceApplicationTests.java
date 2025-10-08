@@ -87,4 +87,15 @@ class CatalogServiceApplicationTests {
                     assertThat(book.price()).isEqualTo(expected.price());
                 });
     }
+
+    @Test
+    void whenPostRequestUnauthorizedThen403() {
+        Book expected = new Book("1234567890", "Title", "Author", 9.90, "publisher");
+        webTestClient.post()
+                .uri("/books")
+                .headers(headers -> headers.setBearerAuth(bjornToken.getToken()))
+                .bodyValue(expected)
+                .exchange()
+                .expectStatus().isForbidden();
+    }
 }
