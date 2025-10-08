@@ -98,4 +98,14 @@ class CatalogServiceApplicationTests {
                 .exchange()
                 .expectStatus().isForbidden();
     }
+
+    @Test
+    void whenPostRequestUnauthenticatedThen401() {
+        Book expected = new Book("1234567890", "Title", "Author", 9.90, "publisher");
+        webTestClient.post()
+                .uri("/books")
+                .bodyValue(expected)
+                .exchange()
+                .expectStatus().isUnauthorized();
+    }
 }
