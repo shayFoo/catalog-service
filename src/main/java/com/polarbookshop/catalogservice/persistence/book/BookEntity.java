@@ -1,10 +1,7 @@
 package com.polarbookshop.catalogservice.persistence.book;
 
 import com.polarbookshop.catalogservice.domain.book.Book;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.annotation.Version;
+import org.springframework.data.annotation.*;
 import org.springframework.data.relational.core.mapping.Table;
 import org.springframework.lang.NonNull;
 
@@ -27,6 +24,10 @@ public record BookEntity(
         LocalDateTime createdDate,
         @LastModifiedDate
         LocalDateTime lastModifiedDate,
+        @CreatedBy
+        String createdBy,
+        @LastModifiedBy
+        String lastModifiedBy,
         @Version
         int version
 ) {
@@ -45,6 +46,8 @@ public record BookEntity(
                 book.price(),
                 LocalDateTime.now(),
                 LocalDateTime.now(),
+                null,
+                null,
                 0
         );
     }
@@ -72,6 +75,8 @@ public record BookEntity(
                 book.price(),
                 this.createdDate,
                 LocalDateTime.now(),
+                this.createdBy,
+                this.lastModifiedBy,
                 this.version
         );
     }
