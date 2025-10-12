@@ -21,6 +21,7 @@ public class SecurityConfig {
         return http
                 .authorizeHttpRequests(auth -> auth.
                         requestMatchers(HttpMethod.GET, "/", "/books/**").permitAll()
+                        .requestMatchers("/actuator/**").permitAll() // in a real app, secure this endpoint(Basic Auth, IP whitelisting, etc.)
                         .anyRequest().hasRole("employee"))
                 .oauth2ResourceServer(c -> c.jwt(Customizer.withDefaults()))
                 .sessionManagement(session -> session

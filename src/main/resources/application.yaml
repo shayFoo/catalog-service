@@ -34,7 +34,27 @@ management:
   endpoints:
     web:
       exposure:
-        include: refresh
+        include: health,metrics,prometheus,flyway,info
+  info:
+    env:
+      enabled: true
+  endpoint:
+    health:
+      show-details: always
+      show-components: always
+      probes:
+        enabled: true
+  metrics:
+    tags:
+      application: ${spring.application.name}
+  tracing:
+    sampling:
+      probability: 1.0
+  otlp:
+    tracing:
+      endpoint: http://localhost:4318/v1/traces
+      compression: none
+      timeout: 10s
 server:
   port: 9001
   shutdown: graceful
@@ -47,7 +67,8 @@ server:
 polar:
   greeting: "Hello from application.yaml in Jar!"
 logging:
-  level:
-    org:
-      springframework:
-        security: TRACE
+  pattern:
+    correlation: "[${spring.application.name:},%X{traceId:-},%X{spanId:-}]"
+    include-application-name: false
+info:
+  system: Polar Bookshop
