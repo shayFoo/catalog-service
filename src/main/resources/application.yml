@@ -66,7 +66,7 @@ server:
       max: 50
       min-spare: 5
 polar:
-  greeting: "Hello from application.yaml in Jar!"
+  greeting: "Hello from application.yml in Jar!"
 logging:
   pattern:
     correlation: "[${spring.application.name:},%X{traceId:-},%X{spanId:-}]"
