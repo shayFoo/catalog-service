@@ -3,7 +3,7 @@ custom_build(
     # Name of the container image
     ref = 'catalog-service',
     # Command to build the image - using env parameter for cross-platform compatibility
-    command='gradlew bootBuildImage --imageName %EXPECTED_REF%',
+    command='gradlew jibDockerBuild --image %EXPECTED_REF%',
     # files to watch for changes
     deps=['build.gradle.kts', 'src']
 )

@@ -110,11 +110,14 @@ jib {
     }
     container {
         jvmFlags = listOf("-Duser.timezone=Asia/Tokyo")
+        user = "1000"
         environment = mapOf(
             "LANG" to "ja_JP.UTF-8",
             "LANGUAGE" to "ja_JP:ja",
             "LC_ALL" to "ja_JP.UTF-8",
         )
+        workingDirectory = "/workspace"
         mainClass = "com.polarbookshop.catalogservice.CatalogServiceApplication"
+        ports = listOf("9001")
     }
 }
