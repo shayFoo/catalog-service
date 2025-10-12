@@ -16,6 +16,9 @@ java {
     }
 }
 
+springBoot {
+    buildInfo() // Generate build info for actuator
+}
 repositories {
     mavenCentral()
 }
