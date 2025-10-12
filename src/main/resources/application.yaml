@@ -46,8 +46,3 @@ server:
       min-spare: 5
 polar:
   greeting: "Hello from application.yaml in Jar!"
-logging:
-  level:
-    org:
-      springframework:
-        security: TRACE
