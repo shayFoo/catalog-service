@@ -33,18 +33,8 @@ spec:
           env:
             - name: BPL_JVM_THREAD_COUNT
               value: "50"
-            - name: SPRING_DATASOURCE_URL
-              value: jdbc:postgresql://polar-postgres/polardb_catalog
             - name: SPRING_PROFILES_ACTIVE
               value: testdata
-            - name: SPRING_CLOUD_CONFIG_FAIL-FAST
-              value: "true"
-            - name: SPRING_CLOUD_CONFIG_RETRY_MAX-ATTEMPTS
-              value: "10"
-            - name: SPRING_CLOUD_CONFIG_URI
-              value: http://config-service
-            - name: SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER-URI
-              value: http://polar-keycloak/realms/PolarBookshop
           resources:
             requests:
               memory: "512Mi"
@@ -55,6 +45,8 @@ spec:
           volumeMounts:
             - name: tmp
               mountPath: /tmp
+            - name: catalog-config-volume
+              mountPath: /workspace/config
           securityContext:
             allowPrivilegeEscalation: false
             runAsNonRoot: true
@@ -74,3 +66,6 @@ spec:
       volumes:
         - name: tmp
           emptyDir: { }
+        - name: catalog-config-volume
+          configMap:
+            name: catalog-config
