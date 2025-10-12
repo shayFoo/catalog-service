@@ -101,6 +101,7 @@ tasks.named<BootBuildImage>("bootBuildImage") {
     }
 }
 
+// Jib settings for local development.
 jib {
     from {
         image = "amazoncorretto:25"
