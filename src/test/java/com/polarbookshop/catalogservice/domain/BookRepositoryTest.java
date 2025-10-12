@@ -12,6 +12,7 @@ import org.springframework.boot.test.autoconfigure.data.jdbc.DataJdbcTest;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.jdbc.core.JdbcAggregateTemplate;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.util.List;
@@ -71,4 +72,26 @@ public class BookRepositoryTest {
                 .containsExactly(isbn, "Title", "Author", 9.90);
     }
 
+    @Test
+    void whenCreateBookNotAuthenticatedThenNoAuditMetadata() {
+        String isbn = "1234567890";
+        Book book = new Book(isbn, "Title", "Author", 9.90, "publisher");
+
+        BookEntity savedBook = jdbcAggregateTemplate.insert(BookEntity.of(book));
+
+        assertThat(savedBook.createdBy()).isNull();
+        assertThat(savedBook.lastModifiedBy()).isNull();
+    }
+
+    @Test
+    @WithMockUser(username = "isabelle")
+    void whenCreateBookAuthenticatedThenAuditMetadataPopulated() {
+        String isbn = "1234567890";
+        Book book = new Book(isbn, "Title", "Author", 9.90, "publisher");
+
+        BookEntity savedBook = jdbcAggregateTemplate.insert(BookEntity.of(book));
+
+        assertThat(savedBook.createdBy()).isEqualTo("isabelle");
+        assertThat(savedBook.lastModifiedBy()).isEqualTo("isabelle");
+    }
 }
