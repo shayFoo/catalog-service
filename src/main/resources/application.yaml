@@ -1,6 +1,11 @@
 spring:
   application:
     name: "catalog-service"
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8080/realms/PolarBookshop
   config:
     import: "optional:configserver:"
   cloud:
@@ -41,3 +46,8 @@ server:
       min-spare: 5
 polar:
   greeting: "Hello from application.yaml in Jar!"
+logging:
+  level:
+    org:
+      springframework:
+        security: TRACE
