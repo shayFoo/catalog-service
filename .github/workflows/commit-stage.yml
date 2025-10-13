@@ -3,7 +3,7 @@ on: "push"
 env:
   REGISTRY: "ghcr.io"
   IMAGE_NAME: "shayfoo/catalog-service"
-  VERSION: ${ { github.sha } }
+  VERSION: ${{ GITHUB_SHA }}
 jobs:
   build:
     name: "Build and Test"
