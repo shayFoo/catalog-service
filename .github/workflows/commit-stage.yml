@@ -35,6 +35,9 @@ jobs:
         run: |
           chmod +x gradlew
           ./gradlew build
+      - name: build kustomize
+        run: |
+          kubectl kustomize build k8s
       - name: Validate Kubernetes manifest
         uses: "stackrox/kube-linter-action@v1.0.7"
         with:
