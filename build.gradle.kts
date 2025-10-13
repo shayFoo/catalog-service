@@ -5,6 +5,7 @@ plugins {
     java
     id("org.springframework.boot") version "3.5.6"
     id("io.spring.dependency-management") version "1.1.7"
+    id("com.google.cloud.tools.jib") version "3.4.5"
 }
 
 group = "com.polarbookshop"
@@ -97,5 +98,27 @@ tasks.named<BootBuildImage>("bootBuildImage") {
             password = project.findProperty("registryToken")?.toString()
             url = project.findProject("registryUrl")?.toString()
         }
+    }
+}
+
+// Jib settings for local development.
+jib {
+    from {
+        image = "amazoncorretto:25"
+    }
+    to {
+        image = project.name + ":" + project.version
+    }
+    container {
+        jvmFlags = listOf("-Duser.timezone=Asia/Tokyo")
+        user = "1000"
+        environment = mapOf(
+            "LANG" to "ja_JP.UTF-8",
+            "LANGUAGE" to "ja_JP:ja",
+            "LC_ALL" to "ja_JP.UTF-8",
+        )
+        workingDirectory = "/workspace"
+        mainClass = "com.polarbookshop.catalogservice.CatalogServiceApplication"
+        ports = listOf("9001")
     }
 }
