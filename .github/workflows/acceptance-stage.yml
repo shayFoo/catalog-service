@@ -36,7 +36,7 @@ jobs:
       - run: echo "Security tests would run here"
   deliver:
     name: Deliver release candidate to production
-    need: [ functional, performance, security ]
+    needs: [ functional, performance, security ]
     runs-on: ubuntu-24.04
     steps:
       - name: Deliver application to production
