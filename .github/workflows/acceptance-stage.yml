@@ -39,6 +39,7 @@ jobs:
     needs: [ functional, performance, security ]
     runs-on: ubuntu-24.04
     steps:
+      - run: echo "All acceptance tests passed, preparing to deliver to production"
       - name: Deliver application to production
         uses: peter-evans/repository-dispatch@v4
         with:
